@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import tailwindcss from "@tailwindcss/vite";
 import path from 'path';
+import node from '@astrojs/node';
 
 const ApiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL;
 
@@ -23,5 +24,8 @@ export default defineConfig({
 				'@styles': path.resolve('./src/styles'),
 			}
 		}
-	}
+	},
+	adapter: node({
+		mode: 'standalone'
+	  })
 });
