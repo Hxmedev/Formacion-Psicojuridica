@@ -13,6 +13,14 @@ export default defineConfig({
 	site: ApiBaseUrl,
 	integrations: [mdx(), sitemap(), react()],
 	output: 'server',
+	server: {
+		// Railway asigna dinámicamente el puerto mediante la variable de entorno PORT
+		port: process.env.PORT ? Number(process.env.PORT) : 4321,
+		host: true // importante para permitir conexiones externas
+	},
+	adapter: node({
+		mode: 'standalone'
+	}),
 	vite: {
 		plugins: [tailwindcss()],
 		resolve: {
@@ -24,8 +32,5 @@ export default defineConfig({
 				'@styles': path.resolve('./src/styles'),
 			}
 		}
-	},
-	adapter: node({
-		mode: 'standalone'
-	  })
+	}
 });
