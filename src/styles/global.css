@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+	--accent: #e7e8f8;
+	--accent-dark: #8892eb;
+	--black: 15, 18, 25;
+	--gray: 96, 115, 159;
+	--gray-light: 229, 233, 240;
+	--gray-dark: 34, 41, 57;
+	--gray-gradient: rgba(var(--gray-light), 0.5), #fff;
+	--box-shadow:
+		0 2px 6px rgba(var(--gray), 0.25),
+		0 8px 24px rgba(var(--gray), 0.33),
+		0 16px 32px rgba(var(--gray), 0.33);
+}
+
+@font-face {
+	font-family: 'Atkinson';
+	src: url('/fonts/atkinson-regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Atkinson';
+	src: url('/fonts/atkinson-bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+body {
+	font-family: 'Atkinson', sans-serif;
+	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background-size: 100% 600px;
+	color: rgb(var(--gray-dark));
+}
+
+main {
+	max-width: auto;
+	width: 100%;
+	padding: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: rgb(var(--black));
+	font-weight: bold;
+	line-height: 1.2;
+	margin-bottom: 0.5em;
+}
+
+h1 { font-size: 3.052em; }
+h2 { font-size: 2.441em; }
+h3 { font-size: 1.953em; }
+h4 { font-size: 1.563em; }
+h5 { font-size: 1.25em; }
+
+strong, b {
+	font-weight: 700;
+}
+
+
+
+a:hover {
+	color: var(--accent-dark);
+}
+
+p {
+	margin-bottom: 1em;
+}
+
+textarea, input {
+	font-size: 16px;
+	width: 100%;
+}
+
+table {
+	width: 100%;
+}
+
+img {
+	max-width: 100%;
+	object-fit: cover;
+}
+
+code {
+	padding: 2px 5px;
+	background-color: rgb(var(--gray-light));
+	border-radius: 4px;
+}
+
+pre {
+	padding: 1.5em;
+	border-radius: 8px;
+	overflow-x: auto;
+	background-color: rgb(var(--gray-light));
+}
+
+pre > code {
+	all: unset;
+}
+
+blockquote {
+	border-left: 4px solid var(--accent);
+	padding-left: 1rem;
+	margin: 0;
+	font-size: 1.333em;
+}
+
+hr {
+	border-top: 1px solid rgb(var(--gray-light));
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 18px;
+	}
+	main {
+		padding: 1em;
+	}
+}
+
+.sr-only {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}

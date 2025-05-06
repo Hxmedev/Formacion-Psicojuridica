@@ -1,0 +1,45 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Conversatorio {
+  id            Int        @id @default(autoincrement())
+  slug          String     @unique
+  year          Int
+  title         String
+  description   String
+  coordinator   String?
+  date          String?
+  time          String?
+  linkToRegister String?
+  organization  String?
+  speakers      Speaker[]  // Relación uno a muchos
+  imageUrl      String?    // Nueva propiedad para la imagen, es opcional
+}
+
+model Speaker {
+  id              Int            @id @default(autoincrement())
+  name            String
+  conversatorio   Conversatorio @relation(fields: [conversatorioId], references: [id], onDelete: Cascade)
+  conversatorioId Int
+}
+model Curso {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique
+  title       String
+  availability String
+  imageUrl    String?
+  docentes    Docente[]  // Relación muchos a muchos o uno a muchos, dependiendo del diseño
+}
+
+model Docente {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  cursos Curso[] // Relación con cursos
+}
+

@@ -1,0 +1,99 @@
+---
+const { item, mobile = false } = Astro.props;
+const Id = item.label.toLowerCase().replace(/\s+/g, '-');
+---
+
+<li class={`group relative ${mobile ? 'py-1' : ''}`}>
+  {item.href ? (
+    <a
+      href={item.href}
+      class={`px-4 py-2 block text-white transition-all duration-200 ${mobile ? 'w-full' : 'rounded-lg hover:bg-[#2D3A4A]'} flex items-center justify-between`}
+    >
+      <span>{item.label}</span>
+      {item.children && (
+        <svg
+          class={`w-4 h-4 ml-2 transition-transform duration-200 ${!mobile ? 'group-hover:rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      )}
+    </a>
+  ) : (
+    <span class="px-4 py-2 block text-white rounded cursor-default flex items-center">
+      {item.label}
+      {item.children && (
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      )}
+    </span>
+  )}
+
+  {item.children && (
+    <ul
+      id={`dropdown-${Id}`}
+      class={`${
+        mobile
+          ? 'pl-4 py-2 space-y-1'
+          : 'absolute left-0 top-full mt-1 min-w-[200px] bg-[#1E2A3A] border border-[#2D3A4A] shadow-xl rounded-lg z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200'
+      }`}
+    >
+      {item.children.map((child: { href?: string; label: string }) => (
+        <li>
+          <a
+            href={child.href}
+            target={child.href?.startsWith('http') ? '_blank' : '_self'}
+            rel={child.href?.startsWith('http') ? 'noopener noreferrer' : ''}
+            class="block px-4 py-2 text-[#E0E0E0] hover:text-white hover:bg-[#2D3A4A] transition-all duration-200"
+          >
+            {child.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</li>
+
+
+<style is:global>
+  /* Estilos dropdown escritorio */
+  .dropdown {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    background: #1E2A3A;
+    border: 1px solid #2D3A4A;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 30;
+    padding: 0.5rem 0;
+    perspective: 1000px;
+  }
+
+  .dropdown li {
+    opacity: 0;
+    transform: rotateX(-90deg);
+    transform-origin: top;
+    transition: all 0.3s ease-out;
+  }
+
+  /* Móvil: mostrar siempre */
+  @media (max-width: 1023px) {
+    .dropdown {
+      position: static;
+      display: block;
+      border: none;
+      box-shadow: none;
+      padding-left: 1rem;
+      perspective: none;
+    }
+
+    .dropdown li {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,160 @@
+---
+import { Navigation } from '../data/navigation';
+import NavItem from './NavItem.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header class="bg-[#1E2A3A] shadow-md sticky top-0 z-[20]">
+  <nav class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="/" class="text-white font-bold text-xl">
+      <img src="logo.jpg" alt="Logo" class="rounded-full h-10 inline-block align-middle" />
+    </a>
+
+    <!-- Menu en dispositivos grandes -->
+    <ul class="hidden lg:flex space-x-6">
+      {Navigation.map((item) => (
+        <NavItem item={item} />
+      ))}
+    </ul>
+
+    <!-- Menu de hamburguesa en dispositivos móviles -->
+    <button class="lg:hidden text-white focus:outline-none" id="menu-toggle" aria-label="Toggle menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Menú de hamburguesa desplegable -->
+  <div id="mobile-menu" class="list-none lg:hidden hidden flex-col bg-[#1E2A3A] p-4 border-t border-[#2D3A4A]">
+    {Navigation.map((item) => (
+      <NavItem item={item} mobile={true} />
+    ))}
+  </div>
+</header>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        menuToggle.setAttribute('aria-expanded', !mobileMenu.classList.contains('hidden'));
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Animación para dropdowns desktop
+    const navItems = document.querySelectorAll('.group');
+    navItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const dropdown = item.querySelector('.dropdown');
+        if (dropdown) {
+          const items = dropdown.querySelectorAll('li');
+          items.forEach((li, index) => {
+            li.style.animation = `flipIn 0.3s ease-out ${index * 0.1}s forwards`;
+            li.style.opacity = '0';
+            li.style.transform = 'rotateX(90deg)';
+            li.style.transformOrigin = 'top';
+          });
+        }
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        const dropdown = item.querySelector('.dropdown');
+        if (dropdown) {
+          const items = dropdown.querySelectorAll('li');
+          items.forEach((li, index) => {
+            li.style.animation = '';
+            li.style.opacity = '';
+            li.style.transform = '';
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<style is:global>
+  /* Animación flip para dropdown items */
+  @keyframes flipIn {
+    from {
+      opacity: 0;
+      transform: rotateX(90deg);
+    }
+    to {
+      opacity: 1;
+      transform: rotateX(0);
+    }
+  }
+
+  /* Estilos base del dropdown */
+  .dropdown {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    background: #1E2A3A;
+    border: 1px solid #2D3A4A;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 30;
+    padding: 0.5rem 0;
+    perspective: 1000px;
+  }
+
+  .dropdown li {
+    opacity: 0;
+    transform: rotateX(90deg);
+    transform-origin: top;
+  }
+
+  .group:hover .dropdown {
+    display: block;
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #E0E0E0;
+    transition: all 0.3s ease;
+    background: #1E2A3A;
+  }
+
+  .dropdown a:hover {
+    background: #2D3A4A;
+    transform: translateX(5px);
+  }
+
+  /* Estilos para móviles */
+  @media (max-width: 1023px) {
+    .dropdown {
+      position: static;
+      display: block;
+      border: none;
+      box-shadow: none;
+      padding-left: 1rem;
+      animation: none;
+      perspective: none;
+    }
+    
+    .dropdown li {
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
+    
+    .dropdown a:hover {
+      transform: none;
+      padding-left: 1.5rem;
+    }
+  }
+</style>

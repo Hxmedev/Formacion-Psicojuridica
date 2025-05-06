@@ -1,0 +1,198 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        Conoce a Nuestro Equipo
+      </h1>
+      <div class="w-20 h-1 bg-blue-600 mx-auto mb-4"></div>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Profesionales comprometidos con la excelencia en psicología jurídica.
+      </p>
+    </section>
+
+    <!-- Equipo Grid -->
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <!-- Miembro 1 -->
+      <div class="miembro bg-white rounded-lg shadow-md overflow-hidden flex flex-col border border-gray-100 group">
+        <div class="relative h-80 w-full overflow-hidden">
+          <img
+            src="equipo2.jpg"
+            alt="cecilia"
+            class="absolute h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+
+        <div class="p-6 flex flex-col">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-1">Maria Cecilia Perrone</h3>
+            <p class="text-blue-600 font-medium mb-4">Lic. en Psicología UNC</p>
+            <div class="relative">
+              <p class="text-gray-600 mb-4 line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                Mgter en Salud Mental en Escuela de Salud Pública UNC - Especialista en psicología jurídica y forense M.E. 673 - Investigadora - Docente responsable de cursos de grado y postgrado en UNC.
+              </p>
+              <div class="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-white to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300"></div>
+            </div>
+          </div>
+
+          <button
+            class="toggle-button text-blue-600 font-medium flex items-center mx-auto hover:text-blue-800 transition-colors"
+            data-target="infoCecilia"
+          >
+            <span class="button-text mr-1">Ver más</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div id="infoCecilia" class="info-completa hidden mt-4 pt-4 border-t border-gray-100">
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Ejercicio profesional en instituciones públicas jurídicas
+              </li>
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Perito de parte judicial
+              </li>
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Co-creadora y responsable académica de Formación Psicojurídica
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Miembro 2 -->
+      <div class="miembro bg-white rounded-lg shadow-md overflow-hidden flex flex-col border border-gray-100 group">
+        <div class="relative h-80 w-full overflow-hidden">
+          <img
+            src="equipo1.jpg"
+            alt="carla"
+            class="absolute h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+
+        <div class="p-6 flex flex-col">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-1">Carla Micaela Saglietti</h3>
+            <p class="text-blue-600 font-medium mb-4">Lic. en Psicología UNC</p>
+            <div class="relative">
+              <p class="text-gray-600 mb-4 line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                Especialista en Terapias Conductuales Contextuales - Docente colaboradora en cursos de grado y postgrado en UNC - Experiencia en instituciones públicas jurídicas.
+              </p>
+              <div class="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-white to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300"></div>
+            </div>
+          </div>
+
+          <button
+            class="toggle-button text-blue-600 font-medium flex items-center mx-auto hover:text-blue-800 transition-colors"
+            data-target="infoCarla"
+          >
+            <span class="button-text mr-1">Ver más</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div id="infoCarla" class="info-completa hidden mt-4 pt-4 border-t border-gray-100">
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Experiencia en investigación
+              </li>
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Co-creadora y responsable docente de Formación Psicojurídica
+              </li>
+              <li class="flex items-start">
+                <svg class="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Especialización en abordajes contextuales
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Acordeón para la información adicional
+      document.querySelectorAll(".toggle-button").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const targetId = button.getAttribute("data-target");
+          const target = targetId ? document.getElementById(targetId) : null;
+          const icon = button.querySelector("svg");
+          const buttonText = button.querySelector(".button-text");
+          
+          if (target) {
+            // Alternar la visibilidad del contenido
+            target.classList.toggle("hidden");
+            
+            // Rotar el icono
+            if (icon) {
+              icon.classList.toggle("rotate-180");
+            }
+            
+            // Cambiar el texto del botón
+            if (buttonText) {
+              if (target.classList.contains("hidden")) {
+                buttonText.textContent = "Ver más";
+              } else {
+                buttonText.textContent = "Ver menos";
+              }
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .miembro {
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .line-clamp-none {
+      -webkit-line-clamp: unset;
+    }
+
+    .rotate-180 {
+      transform: rotate(180deg);
+    }
+
+    /* Efecto hover en toda la tarjeta */
+    .miembro:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</Layout>

@@ -1,0 +1,195 @@
+---
+import { Navigation } from '../data/navigation';
+import NavItem from './NavItem.astro';
+import { RequireAuthAstro } from '../lib/requireAuth';
+
+const user = await RequireAuthAstro(Astro);
+---
+
+<header class="bg-[#1E2A3A] shadow-md sticky top-0 z-[20]">
+  <nav class={`max-w-7xl mx-auto px-4 py-3 flex ${user ? "justify-start sm:gap-[20px]" : "justify-between"} items-center`}>
+    <!-- Logo -->
+    <a href="/" class="text-white font-bold text-xl">
+      <img src="logo.jpg" alt="Logo" class="rounded-full h-auto inline-block align-middle" />
+    </a>
+
+    <!-- Menú en dispositivos grandes -->
+    <ul class="hidden lg:flex space-x-6">
+      {Navigation.map((item) => (
+        <NavItem item={item} />
+      ))}
+    </ul>
+
+    <!-- Menu de hamburguesa en dispositivos móviles -->
+    <button class="lg:hidden text-white focus:outline-none" id="menu-toggle" aria-label="Toggle menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Menú de hamburguesa desplegable -->
+  <div id="mobile-menu" class="list-none lg:hidden hidden flex-col bg-[#1E2A3A] p-4 border-t border-[#2D3A4A]">
+    {Navigation.map((item) => (
+      <NavItem item={item} mobile={true} />
+    ))}
+  </div>
+
+  <!-- Botón de Cerrar Sesión y Admin Panel - Posición absoluta, alineado a la derecha -->
+  {user && (
+    <div class="absolute top-6 right-[45px] z-50 flex gap-2 lg:right-6">
+      <!-- Botón de Admin Panel -->
+      <form action="/admin" method="GET">
+        <button
+          type="submit"
+          class="flex items-center justify-center p-2 md:px-4 md:py-2 bg-white/90 backdrop-blur-sm border border-blue-200 text-blue-600 rounded-full shadow-lg hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition-all duration-300 hover:shadow-xl"
+          aria-label="Ir al panel de administración"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:group-hover:rotate-180 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.243 2.757a1 1 0 011.414 0l2.5 2.5a1 1 0 010 1.414l-1.75 1.75a5.003 5.003 0 01-1.503.855l-.106.056A5.01 5.01 0 017 7c-.021-.47-.062-.93-.117-1.376L4.878 6.121a1 1 0 010-1.414l2.5-2.5a1 1 0 011.414 0L9.243 2.757zM16 11a5 5 0 11-10 0 5 5 0 0110 0z" />
+          </svg>
+          <span class="hidden md:inline ml-2 font-medium">Admin Panel</span>
+        </button>
+      </form>
+
+      <!-- Botón de Logout -->
+      <form action="/api/auth/logout" method="POST">
+        <button
+          type="submit"
+          class="flex items-center justify-center p-2 md:px-4 md:py-2 bg-white/90 backdrop-blur-sm border border-red-200 text-red-600 rounded-full shadow-lg hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-all duration-300 hover:shadow-xl"
+          aria-label="Cerrar sesión"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:group-hover:rotate-180 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+          </svg>
+          <span class="hidden md:inline ml-2 font-medium">Cerrar sesión</span>
+        </button>
+      </form>
+    </div>
+  )}
+</header>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        menuToggle.setAttribute('aria-expanded', !mobileMenu.classList.contains('hidden'));
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Animación para dropdowns desktop
+    const navItems = document.querySelectorAll('.group');
+    navItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const dropdown = item.querySelector('.dropdown');
+        if (dropdown) {
+          const items = dropdown.querySelectorAll('li');
+          items.forEach((li, index) => {
+            li.style.animation = `flipIn 0.3s ease-out ${index * 0.1}s forwards`;
+            li.style.opacity = '0';
+            li.style.transform = 'rotateX(90deg)';
+            li.style.transformOrigin = 'top';
+          });
+        }
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        const dropdown = item.querySelector('.dropdown');
+        if (dropdown) {
+          const items = dropdown.querySelectorAll('li');
+          items.forEach((li, index) => {
+            li.style.animation = '';
+            li.style.opacity = '';
+            li.style.transform = '';
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<style is:global>
+  /* Animación flip para dropdown items */
+  @keyframes flipIn {
+    from {
+      opacity: 0;
+      transform: rotateX(90deg);
+    }
+    to {
+      opacity: 1;
+      transform: rotateX(0);
+    }
+  }
+
+  /* Estilos base del dropdown */
+  .dropdown {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    background: #1E2A3A;
+    border: 1px solid #2D3A4A;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 40;
+    padding: 0.5rem 0;
+    perspective: 1000px;
+  }
+
+  .dropdown li {
+    opacity: 0;
+    transform: rotateX(90deg);
+    transform-origin: top;
+  }
+
+  .group:hover .dropdown {
+    display: block;
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #E0E0E0;
+    transition: all 0.3s ease;
+    background: #1E2A3A;
+  }
+
+  .dropdown a:hover {
+    background: #2D3A4A;
+    transform: translateX(5px);
+  }
+
+  /* Estilos para móviles */
+  @media (max-width: 1023px) {
+    .dropdown {
+      position: static;
+      display: block;
+      border: none;
+      box-shadow: none;
+      padding-left: 1rem;
+      animation: none;
+      perspective: none;
+    }
+    
+    .dropdown li {
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
+    
+    .dropdown a:hover {
+      transform: none;
+      padding-left: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import "../styles/global.css";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Sitio</title>
+  </head>
+  <body class="bg-white text-gray-900 antialiased">
+    <!-- Encabezado global -->
+    <Header />
+
+    <!-- Contenido principal con ancho máximo y centrado -->
+    <main class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+      <slot />
+    </main>
+
+    <!-- Botón flotante de WhatsApp -->
+    <WhatsAppButton />
+
+    <!-- Pie de página global -->
+    <Footer />
+  </body>
+</html>

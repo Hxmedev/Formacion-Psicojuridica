@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AdminPanel from '../components/AdminPanel.astro';
+import { RequireAuthAstro } from '../lib/requireAuth';
+
+const user = await RequireAuthAstro(Astro);
+if (!user) {
+  return Astro.redirect('/login');
+}
+---
+
+<Layout>
+  <section class="bg-gradient-to-b from-gray-50 to-gray-100 py-12 min-h-screen relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+      <div class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+          Panel de Administración
+        </h1>
+        <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          Gestiona los contenidos académicos
+        </p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <AdminPanel />
+      </div>
+    </div>
+  </section>
+</Layout>

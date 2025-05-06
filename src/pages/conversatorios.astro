@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+const ApiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL
+const response = await fetch(`${ApiBaseUrl}/api/conversatorios/get`);
+console.log(`${ApiBaseUrl}/api/conversatorios/get`)
+const conversatorios = await response.json();
+
+const groupedTalks = conversatorios.reduce((acc: Record<number, typeof conversatorios[0][]>, talk: typeof conversatorios[0]) => {
+  acc[talk.year] = acc[talk.year] || [];
+  acc[talk.year].push(talk);
+  return acc;
+}, {} as Record<number, typeof conversatorios[0][]>);
+
+const sortedYears = Object.keys(groupedTalks).map(Number).sort((a, b) => b - a);
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-b from-teal-700 to-teal-600 text-white py-24 overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')]"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+      <h1 class="text-4xl md:text-5xl font-light leading-tight mb-6">Conversatorios <span class="font-semibold">Profesionales</span></h1>
+      <div class="w-24 h-1 bg-teal-400 mx-auto mb-8"></div>
+      <div class="max-w-3xl mx-auto space-y-4 text-lg text-teal-50 leading-relaxed">
+        <p>Espacios de intercambio profesional que fomentan el pensamiento crítico sobre temas actuales.</p>
+        <p>Reuniones mensuales online, abiertas y gratuitas, con especialistas invitados.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Features Grid -->
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <div class="text-teal-600 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Encuentros Mensuales</h3>
+          <p class="text-gray-600">Sesiones programadas regularmente para mantener actualizada tu práctica profesional.</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <div class="text-teal-600 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Expertos Invitados</h3>
+          <p class="text-gray-600">Profesionales destacados comparten sus conocimientos y experiencias.</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <div class="text-teal-600 mb-4">
+            <svg xmlns="http://www3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Certificación</h3>
+          <p class="text-gray-600">Opción de obtener certificado de participación con validez profesional.</p>
+        </div>
+      </div>
+
+      <!-- Talks by Year -->
+      <div class="space-y-16">
+        {sortedYears.map((year) => (
+          <div key={year}>
+            <div class="flex items-center mb-10">
+              <h2 class="text-3xl font-light text-gray-700">{year}</h2>
+              <div class="flex-1 ml-4 h-px bg-gradient-to-r from-teal-400 to-transparent"></div>
+            </div>
+            
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {groupedTalks[year].map((talk) => (
+                <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+                  <div class="p-6">
+                    <div class="flex items-start">
+                      <div class="flex-shrink-0 bg-teal-50 p-3 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-teal-600 transition-colors">{talk.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">{talk.date} • {talk.time}</p>
+                      </div>
+                    </div>
+                    
+                    {talk.description && (
+                      <p class="mt-4 text-gray-600 text-sm leading-relaxed">{talk.description}</p>
+                    )}
+                    
+                    <div class="mt-5 pt-4 border-t border-gray-100">
+                      {talk.speakers && (
+                        <div class="flex items-start text-sm">
+                          <span class="text-gray-500 font-medium mr-2">Disertantes:</span>
+                          <span class="text-gray-700">{talk.speakers.join(', ')}</span>
+                        </div>
+                      )}
+                      
+                      {talk.linkToRegister && (
+                        <a href={talk.linkToRegister} class="mt-3 inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-800 transition-colors">
+                          Registrarse
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-teal-700 text-white py-16">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-light mb-6">¿Quieres proponer un tema o participar como disertante?</h2>
+      <p class="text-lg text-teal-100 mb-8 max-w-2xl mx-auto">Estamos abiertos a colaboraciones con profesionales que quieran compartir sus conocimientos.</p>
+      <a href="/contacto" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-teal-700 bg-white hover:bg-gray-50 transition-colors">
+        Contáctanos
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</Layout>
