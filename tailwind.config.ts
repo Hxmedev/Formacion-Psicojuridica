@@ -29,7 +29,10 @@ const config: Config = {
       },
       display: {
         'group-hover': 'group-hover'
-      }
+      },
+      fontSize: {
+        'custom-h4': '1.35em',
+      },
     },
   },
   plugins: [
