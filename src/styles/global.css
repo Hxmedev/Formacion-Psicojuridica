@@ -119,6 +119,9 @@ hr {
 	main {
 		padding: 1em;
 	}
+	h1 {
+		font-size: 1.5rem;
+	  }
 }
 
 .sr-only {
