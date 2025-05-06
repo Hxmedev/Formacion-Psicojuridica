@@ -21,7 +21,6 @@ export const Navigation: NavItem[] = [
     href: "https://psiqueducacion.com/",
   },
   { label: "Contacto", href: "/contacto" },
-  { label: "Redes", href: "/redes" },
   {
     label: "Institucional / Nosotros",
     children: [
